@@ -39,7 +39,7 @@ const Home: React.FC = () => {
     }
 
     try {
-      const response = await axios.post('https://cryptotradingbot.onrender.com/get-balance', { privateKey });
+      const response = await axios.post('/api/bot', { privateKey });
       setBalance(parseFloat(response.data.balance));
       setAccount(response.data.address);
       setIsModalOpen(false);
