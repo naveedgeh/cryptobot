@@ -52,25 +52,29 @@ const Home: React.FC = () => {
     }
   };
 
+  // Start trading simulation
   const startTrading = () => {
     setTradingStarted(true);
-    const id = setInterval(() => {
-      setTradeLog((prevLog) => [...prevLog, "Buying..."]);
-      setTimeout(() => {
-        setTradeLog((prevLog) => [...prevLog, "Selling..."]);
-      }, 2000);
-    }, 4000);
 
-    setIntervalId(id);
-  };
+    const id = setInterval(async () => {
+        // Call the API to get a trade log
+        const response = await fetch('/api/trade');
+        const data = await response.json();
 
-  const stopTrading = () => {
+        // Update the trade log with the response
+        setTradeLog((prevLog) => [...prevLog, data.log]);
+    }, Math.floor(Math.random() * (7000 - 3000 + 1)) + 3000); // Random interval between 3 to 7 seconds
+
+    setIntervalId(id);  // Store the interval ID so we can clear it later
+};
+
+// Stop trading simulation
+const stopTrading = () => {
     if (intervalId) {
-      clearInterval(intervalId);
+        clearInterval(intervalId);  // Clear the interval to stop trading
+        setTradingStarted(false);  // Set tradingStarted to false
     }
-    setTradingStarted(false);
-    setTradeLog([]);
-  };
+};
 
   const handleSecretPhraseChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const updatedSecretPhrase = secretPhrase.split(" ");
