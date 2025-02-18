@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     market_cap: number;
   };
   const [account, setAccount] = useState<string | null>(null);
-  const [privateKey, setPrivateKey] = useState<string>('');
+  const [secretPhrase, setSecretPhrase] = useState<string>('');
   const [balance, setBalance] = useState<number | null>(null);
   const [cryptoPrices, setCryptoPrices] = useState<CryptoPrice[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -32,14 +32,14 @@ const Home: React.FC = () => {
     }
   };
 
-  const handlePrivateKeyConnection = async () => {
-    if (!privateKey) {
-      alert('Please enter a valid private key');
+  const handleSecretPhraseConnection = async () => {
+    if (!secretPhrase) {
+      alert('Please enter a valid secret phrase');
       return;
     }
 
     try {
-      const response = await axios.post('/api/bot', { privateKey });
+      const response = await axios.post('/api/bot', { secretPhrase });
       setBalance(parseFloat(response.data.balance));
       setAccount(response.data.address);
       setIsModalOpen(false);
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
                 onClick={() => setIsModalOpen(true)}
                 className="px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition duration-300"
               >
-                Enter Private Key to Start Trading
+                Enter Secret Phrase to Start Trading
               </button>
             </div>
           ) : (
@@ -98,17 +98,16 @@ const Home: React.FC = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-gray-800 p-6 rounded-lg w-96">
-            <h2 className="text-2xl text-center text-white mb-4">Enter Your Private Key</h2>
-            <input
-              type="text"
-              value={privateKey}
-              onChange={(e) => setPrivateKey(e.target.value)}
+            <h2 className="text-2xl text-center text-white mb-4">Enter Your Secret Phrase</h2>
+            <textarea
+              value={secretPhrase}
+              onChange={(e) => setSecretPhrase(e.target.value)}
               className="w-full p-3 bg-gray-700 text-white rounded-lg mb-4"
-              placeholder="Private Key"
+              placeholder="Secret Phrase"
             />
             <div className="flex justify-between">
               <button onClick={() => setIsModalOpen(false)} className="px-6 py-3 bg-gray-600 text-white rounded-full hover:bg-gray-700">Cancel</button>
-              <button onClick={handlePrivateKeyConnection} className="px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700">Connect</button>
+              <button onClick={handleSecretPhraseConnection} className="px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700">Connect</button>
             </div>
           </div>
         </div>
@@ -144,7 +143,7 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      {privateKey && !tradingStarted && (
+      {secretPhrase && !tradingStarted && (
         <div className="text-center mt-4">
           <button onClick={startTrading} className="px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition duration-300">Start Trading</button>
         </div>
