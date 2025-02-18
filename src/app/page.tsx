@@ -4,10 +4,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Home: React.FC = () => {
+  type CryptoPrice = {
+    name: string;
+    symbol: string;
+    price: number;
+    market_cap: number;
+  };
   const [account, setAccount] = useState<string | null>(null);
   const [privateKey, setPrivateKey] = useState<string>('');
   const [balance, setBalance] = useState<number | null>(null);
-  const [cryptoPrices, setCryptoPrices] = useState<any[]>([]);
+  const [cryptoPrices, setCryptoPrices] = useState<CryptoPrice[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [tradingStarted, setTradingStarted] = useState<boolean>(false);
   const [tradeLog, setTradeLog] = useState<string[]>([]);
