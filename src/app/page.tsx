@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import bip39 from "bip39";
 
 const Home: React.FC = () => {
   type CryptoPrice = {
@@ -22,9 +21,6 @@ const Home: React.FC = () => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
   // Generate Secret Phrase when the user first opens the app
-  const generateSecretPhrase = () => {
-    return bip39.generateMnemonic(); // Generates 12-word phrase
-  };
 
   useEffect(() => {
     fetchCryptoPrices();
@@ -77,11 +73,10 @@ const Home: React.FC = () => {
   };
 
   const handleSecretPhraseChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    let updatedSecretPhrase = secretPhrase.split(" ");
+    const updatedSecretPhrase = secretPhrase.split(" ");
     updatedSecretPhrase[index] = e.target.value.trim();
     setSecretPhrase(updatedSecretPhrase.join(" "));
   };
-
   const validateSecretPhrase = () => {
     const words = secretPhrase.split(" ");
     return words.length === 12 && words.every((word) => word.trim().length > 0);
