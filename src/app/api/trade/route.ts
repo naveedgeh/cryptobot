@@ -3,7 +3,7 @@ export async function GET() {
     const exchanges = ["Curve", "Uniswap"];  // Array of exchanges
   
     const getRandomAction = () => {
-      return Math.random() > 0.5 ? "Buying" : "Selling";
+      return Math.random() > 0.5 ? "Buy" : "Sell";
     };
   
     const getRandomTime = () => {
@@ -34,7 +34,7 @@ export async function GET() {
       const currentTime = getCurrentTime();
   
       // Format the log message as specified
-      return `[${currentTime}] ✅ ${action} on ${exchange1}, ${action === "Buying" ? "Sell" : "Buy"} on ${exchange2} Profit: ${profit}`;
+      return `[${currentTime}] ✅ ${action} on ${exchange1}, ${action === "Buy" ? "Sell" : "Buy"} on ${exchange2} Profit: ${profit}`;
     };
   
     // Generate trade log

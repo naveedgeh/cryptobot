@@ -176,7 +176,7 @@ const stopTrading = () => {
           <h3 className="text-xl font-semibold text-indigo-400 mb-4">Trade Log</h3>
           <div className="space-y-2">
             {tradeLog.map((log, index) => (
-              <div key={index} className={`text-lg ${log.includes("Buying") ? "text-green-400" : "text-red-400"}`}>
+              <div key={index} className={`text-lg  ? "text-green-400"}`}>
                 {log}
               </div>
             ))}
